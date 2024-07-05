@@ -12,6 +12,7 @@ from time import sleep
 from gtts import gTTS  
 from playsound import playsound
 import speech_recognition as sr
+import os
 
 port='COM3'
 global p0, p1, p2, p3, p4, p5, p
@@ -117,25 +118,28 @@ letters={'a':[1,0,0,0,0,0],
         ' ':[0,0,0,0,0,0]}
 l = []
 def voice_input():
+    global input_type
+    input_type=2
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
-        print("Adjusting for ambient noise... Please wait.")
+        messagebox.showinfo("showinfo", "Adjusting for ambient noise... Please wait.")
         recognizer.adjust_for_ambient_noise(source, duration=5)
-        print("Listening...")
+        messagebox.showinfo("showinfo", "Listening...")
         audio = recognizer.listen(source)
 
     try:
-        print("Recognizing...")
+        messagebox.showinfo("showinfo", "Recognizing...")
         global text
         text = recognizer.recognize_google(audio)
         print("You said: " + text)
 
     except sr.UnknownValueError:
         text=""
-        print("Google Web Speech API could not understand the audio")
+        messagebox.showerror("showerror", "Google Web Speech API could not understand the audio")
     except sr.RequestError as e:
         text=""
-        print("Could not request results from Google Web Speech API; {0}".format(e))
+        messagebox.showerror("showerror", "Could not request results from Google Web Speech API; {0}".format(e))
+    op()
 
 def vid():
     flip_enabled = True
@@ -161,7 +165,7 @@ def vid():
 
         ret, frame = cap.read()
         if not ret:
-            print("Failed to capture image")
+            messagebox.showerror("showerror", "Failed to capture image")
             break
         
         if flip_enabled:
@@ -211,7 +215,7 @@ def vid():
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
             cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3, cv2.LINE_AA)
 
-        cv2.imshow('frame', frame)
+        cv2.imshow('Press X to exit', frame)
         cv2.waitKey(1)
         
         time.sleep(0.5)
@@ -246,6 +250,9 @@ def braille_gen(stg):
 
 def say(text):
     language = 'en'
+    tts_file = 'tts.mp3'
+    if os.path.exists(tts_file):
+        os.remove(tts_file)
     obj = gTTS(text=text, lang=language, slow=True)
     obj.save("tts.mp3")
     playsound('tts.mp3')
@@ -328,7 +335,7 @@ def next():
             text_disp(strng)
 
     elif input_type==2:
-        voice_input()
+        # voice_input()
         if output_type==1:
             text_disp(text)
         elif output_type==2:
@@ -456,10 +463,10 @@ def inp():
         op()
 
     def setip_speech():
-        global input_type
-        input_type=2
+        # global input_type
+        # input_type=2
         frame2.destroy()
-        op()
+        voice_input()
 
     image9=ImageTk.PhotoImage(Image.open(inputbg))
     lblx=Label(frame2,image=image9)
