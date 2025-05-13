@@ -1,7 +1,3 @@
-Sure! Here’s a **professionally refined and detailed `README.md`** for your **UNITE** project that improves structure, readability, and completeness while keeping your original tone and purpose intact.
-
----
-
 # 💡 U.N.I.T.E. — **Unified Node for Interpreting and Translating Expressions**
 
 > Empowering the differently-abled through inclusive communication technologies
