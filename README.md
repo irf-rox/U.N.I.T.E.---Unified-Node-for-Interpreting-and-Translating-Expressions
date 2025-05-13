@@ -1,44 +1,181 @@
-**_U.N.I.T.E. - Unified Node for Interpreting and Translating Expressions_**
+Sure! Here’s a **professionally refined and detailed `README.md`** for your **UNITE** project that improves structure, readability, and completeness while keeping your original tone and purpose intact.
 
-Accessibility and integration are important in today's world, but visually impaired people often face frustration when they need information printed in Braille. Historically, the process of creating Braille documents has been a time-consuming and often bureaucratic process. Blind people have to deal with long wait times, administrative problems, and heavy reliance on external resources to transcribe text in Braille. The proposed system offers a solution to tackle this challenge by introducing a device that instantly converts texts to Braille information. Sign Language electronic devices represent technological devices designed to improve accessibility and communication for the visually impaired and hearing impaired. The most important innovation of the proposed system is the ability to convert text input into reproducible Braille format. Users do not need to go through the labyrinthine bureaucracy of Braille document production. Instead, they can enter the desired text into the device and instantly print it out in Braille. The device can also convert text to audio, sign language to text, sign language to braille, audio to braille etc. The impact of this revolutionary process is far-reaching and is leading to freedom and access to information for the visually impaired.
+---
 
-This project mainly focusses on bridging the communication gap between differently abled people.
+# 💡 U.N.I.T.E. — **Unified Node for Interpreting and Translating Expressions**
 
-There are basically 3 phases, the Braille phase, the Sign Language phase and the Text-to-Speech phase.
+> Empowering the differently-abled through inclusive communication technologies
 
-A new phase where handwritten text can be converted to the other mentioned phases is under developement
+---
+
+## 📖 Overview
+
+**U.N.I.T.E.** is a multi-phase accessibility tool designed to bridge the communication gap between **visually impaired** and **hearing impaired** individuals and the rest of the world.
+
+In a world where information access and communication are critical, UNITE addresses the pain points of:
+
+* The **slow, bureaucratic process** of Braille document generation,
+* The **inaccessibility** of sign language to non-signers,
+* And the **exclusion** of visually impaired individuals from fast, digital communication.
+
+This unified platform supports:
+
+* 🔡 **Text to Braille**
+* 🧏 **Sign Language to Text**
+* 🧏‍♂️ **Sign Language to Braille**
+* 🔊 **Text to Speech**
+* 🧾 **Audio to Braille**
+* ✍️ (Coming soon) **Handwritten Text to All Phases**
+
+---
+
+## 🚀 Key Features
+
+* **Instant Braille Conversion**: Skip long wait times and bureaucracy. Input text, get tactile output.
+* **Sign Language Recognition**: Convert hand gestures into real-time text using computer vision and ML.
+* **Speech Output**: Converts detected text to speech for seamless audio interaction.
+* **Arduino-Powered Braille Printer**: A compact, 6-servo module that embosses Braille in real-time.
+* **Custom Model Training**: Train your own dataset with a few commands.
+
+---
+
+## 📦 Project Structure
+
+```
+UNITE/
+├── Code/
+│   ├── collect_imgs.py         # Captures 100 hand gesture images
+│   ├── create_dataset.py       # Prepares dataset (coordinates to arrays)
+│   ├── train_classifier.py     # Trains model using RandomForest
+│   ├── signlang.py             # Sign recognition interface (main entry point)
+├── Arduino/
+│   └── UNITE_Braille_Bot.ino   # Arduino UNO control sketch for Braille bot
+├── media/                      # Project images and demo references
+├── README.md                   # This file
+└── requirements.txt            # Python dependencies
+```
+
+---
+
+## 🔧 Setup Instructions
+
+### 🧠 Software Requirements
+
+Install dependencies with:
+
+```bash
+pip install -r requirements.txt
+```
+
+Libraries used:
+
+* `opencv-python`
+* `mediapipe`
+* `pyfirmata`
+* `gtts`
+* `playsound`
+* `scikit-learn`
+* `numpy`
+
+### 🦾 Arduino Braille Bot
+
+The **UNITE Braille Bot** runs on:
+
+* Arduino UNO
+* 6x SG90 Micro Servo motors
+* Powered by a 9V battery
+
+#### 🔌 Circuit Details
+
+* Servo VCC ➝ Breadboard +ve rail
+* Servo GND ➝ Breadboard -ve rail
+* Servo Signal ➝ Arduino digital pins: **8–13**
+* Battery GND ➝ Breadboard -ve rail
+* Breadboard -ve ➝ Arduino GND (important!)
+
+> 📌 *Pins can be reconfigured in `signlang.py` (lines 12–17)*
+
+---
+
+## 🧪 How to Run
+
+### 🖐 From Scratch (Custom Dataset)
+
+1. **Capture Hand Gestures**
+   Run the following to capture 100 samples per gesture:
+
+   ```bash
+   python collect_imgs.py
+   ```
+
+2. **Create Dataset**
+
+   ```bash
+   python create_dataset.py
+   ```
+
+3. **Train the Classifier**
+
+   ```bash
+   python train_classifier.py
+   ```
+
+4. **Start the Recognizer Interface**
+
+   ```bash
+   python signlang.py
+   ```
+
+   This opens the webcam interface. Show hand gestures, and the system will:
+
+   * Detect sign language
+   * Convert to text
+   * Speak the word (via TTS)
+   * Send character commands to Braille bot via Arduino
+
+---
+
+## 🧠 Under the Hood
+
+* **MediaPipe**: For real-time hand landmark detection.
+* **OpenCV**: Camera handling and gesture capture.
+* **Random Forest**: Fast, reliable classification for hand gestures.
+* **Arduino + PyFirmata**: Communicates gestures to servo motors.
+* **gTTS + playsound**: Converts recognized text into speech audio.
+
+---
+
+## 🧭 Roadmap / Future Phases
+
+* ✍️ **Handwritten Text Detection** (In Progress)
+* 📱 Android App Integration
+* ☁️ Cloud Accessibility API
+* 🧠 LLM Integration for Smart Text Conversion
+* 📊 Dashboard for Visual and Accessibility Analytics
+
+---
+
+## 💡 Why It Matters
+
+Accessibility should not be an afterthought — it's a right. UNITE provides:
+
+* 🔓 **Autonomy** to differently-abled individuals
+* 📚 **Access** to information at par with others
+* 🔁 **Bidirectional communication** between the hearing, sighted, and differently abled
+* ⚙️ **Customizability** for any language, region, or use-case
+
+---
+
+## 🤝 Contributions
+
+Want to improve UNITE? Submit a pull request or open an issue.
+
+All contributions that align with our mission of **inclusion and accessibility** are welcome.
 
 
-This project is done using python, and the libraries which we used are:
-1. cv2
-2. mediapipe
-3. pyfirmata
-4. gtts
-5. playsound
-6. sklearn
-7. numpy
+## 🙏 Acknowledgements
 
+Thanks to all open-source libraries and frameworks used in building this project. Special thanks to the accessibility community and mentors who helped shape the idea.
 
-To access the recognizer program, go to /Code/signlang.py and run it.
-If you want to start from scratch, i.e. from a new custom dataset, run the following modules in order
-1. collect_imgs.py
-2. create_dataset.py
-3. train_classifier.py
-4. signlang.py
+---
 
-
-The collect_imgs.py captures 100 images of your hand symbols within a few seconds.
-Then the create_dataset.py converts the coordinates of the symbols to arrays and converts them to data.pickle file.
-The train_classifier.py trains the model using RandomForest classifier and generates the model.p file.
-The signlang.py opens a webcam prompt where you can show the symbols and it would display the text and when the _Hush.braille_ bot is connected, the braille letters of the corresponding recognized words would be embosed on the bot.
-
-
-The HUSH.braille bot is runs on an Arduino UNO board, with 6 sg90 micro servo motors, powered by a 9V battery, it's circuit connection is as follows:
-![image](https://github.com/irf-rox/Hush.AI/assets/94896261/9f12c3a4-dd40-427c-8ccc-006c561f44ef)
-
-
-The sg90 micro servo has 3 pins - vcc, gnd and signal.
-The +ve and -ve terminals of the battery are connected to the bread board's +ve and -ve line and all the vcc and gnd pins of the servos are connected to the +ve and -ve line of the bread board respectively. A connection from the -ve line to the gnd pin of the arduino must be established to equalize the ground.
-Each signal pin of the servos are connected to Digital pins 8, 9, 10, 11, 12 and 13 (as per the code, can be changed to any pin from 2 to 13 and change in signlang.py lines 12-17)
-
-**_THANK YOU_**
